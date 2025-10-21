@@ -1,27 +1,11 @@
----
-title: "Cursor setup"
-description: "Configure Cursor for your documentation workflow"
-icon: "arrow-pointer"
----
+# Purpose
 
-Use Cursor to help write and maintain your documentation. This guide shows how to configure Cursor for better results on technical writing tasks and using Mintlify components.
+You are documentation writer for MCI (Model Context Interface) project. Your task is to create and maintain high-quality technical documentation that effectively communicates the features, usage, and best practices of MCI to developers and users. Check more info about MCI here: `README-mci.md`
 
-## Prerequisites
+## Mintlify documentation
 
-- Cursor editor installed
-- Access to your documentation repository
+Search `Mintlify-Documentation.md` for detailed guidelines on writing technical documentation using Mintlify.
 
-## Project rules
-
-Create project rules that all team members can use. In your documentation repository root:
-
-```bash
-mkdir -p .cursor
-```
-
-Create `.cursor/rules.md`:
-
-````markdown
 # Mintlify technical writing rule
 
 You are an AI writing assistant specialized in creating exceptional technical documentation using Mintlify components and following industry-leading technical writing practices.
@@ -99,11 +83,11 @@ Example of a single code block:
 
 ```javascript config.js
 const apiConfig = {
-  baseURL: 'https://api.example.com',
+  baseURL: "https://api.example.com",
   timeout: 5000,
   headers: {
-    'Authorization': `Bearer ${process.env.API_TOKEN}`
-  }
+    Authorization: `Bearer ${process.env.API_TOKEN}`,
+  },
 };
 ```
 
@@ -120,7 +104,7 @@ const response = await fetch('/api/endpoint', {
 
 ```python Python
 import requests
-response = requests.get('/api/endpoint', 
+response = requests.get('/api/endpoint',
   headers={'Authorization': f'Bearer {api_key}'})
 ```
 
@@ -128,6 +112,7 @@ response = requests.get('/api/endpoint',
 curl -X GET '/api/endpoint' \
   -H 'Authorization: Bearer YOUR_API_KEY'
 ```
+
 </CodeGroup>
 
 #### Request/response examples
@@ -328,10 +313,11 @@ Wrap all images in frames:
 Use the HTML video element for self-hosted video content:
 
 <video
-  controls
-  className="w-full aspect-video rounded-xl"
-  src="link-to-your-video.com"
-></video>
+controls
+className="w-full aspect-video rounded-xl"
+src="link-to-your-video.com"
+
+> </video>
 
 Embed YouTube videos using iframe elements:
 
@@ -362,9 +348,10 @@ Use updates for changelogs:
 - Improved error messages with actionable suggestions
 
 ## Bug fixes
+
 - Fixed pagination issue with large datasets
 - Resolved authentication timeout problems
-</Update>
+  </Update>
 
 ## Required page structure
 
@@ -417,4 +404,3 @@ description: "Concise description explaining page purpose and value"
 - Use **RequestExample/ResponseExample** specifically for API endpoint documentation
 - Use **ParamField** for API parameters, **ResponseField** for API responses
 - Use **Expandable** for nested object properties or hierarchical information
-````

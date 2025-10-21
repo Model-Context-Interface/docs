@@ -1,0 +1,38 @@
+/* Hide dark mode toggle button */
+[data-theme-toggle],
+button[aria-label*="theme"],
+button[aria-label*="mode"],
+.theme-toggle,
+.mode-toggle {
+  display: none !important;
+}
+
+/* Force light mode always - override system preferences */
+html,
+html[data-theme="dark"],
+html.dark,
+:root {
+  color-scheme: light only !important;
+}
+
+/* Override any dark mode classes */
+html.dark,
+html[data-theme="dark"],
+.dark {
+  /* Reset to light mode colors */
+  background-color: white !important;
+  color: black !important;
+}
+
+/* Ensure all dark mode media queries are ignored */
+@media (prefers-color-scheme: dark) {
+  html,
+  body,
+  * {
+    color-scheme: light !important;
+  }
+}
+
+.peer.is-center ~ .peer-\[\.is-center\]\:max-w-3xl {
+  max-width: 75%;
+}

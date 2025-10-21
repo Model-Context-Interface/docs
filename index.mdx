@@ -1,97 +1,327 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Model Context Interface"
+description: ""
+mode: "center"
 ---
 
-## Setting up
+# Build Powerful AI Tools with Simple JSON Schemas
 
-Get your documentation site up and running in minutes.
+**Model Context Interface (MCI)** transforms how you create AI agent tools.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
+Define collections of tools in a single JSON file, execute them anywhere, and share them effortlessly.
+
+No complex servers, no vendor lock-in – just pure simplicity.
+
+<CardGroup cols={2}>
+  <Card title="🚀 Get Started" href="/python/quickstart" horizontal>
+    Jump into the quickstart guide and build your first MCI tool in under 5
+    minutes with Python. Use it with any framework you like: ADK, LangChain,
+    CrewAI, etc.
+  </Card>
+  <Card
+    title="💻 Schema reference"
+    href="/documentation/schema-reference"
+    horizontal
+  >
+    Explore details about JSON schema - understand what capabilities does the
+    MCI have and how it can contribute to your projects
+  </Card>
+</CardGroup>
+
+## Why Choose MCI?
+
+<CardGroup cols={3}>
+  <Card title="Simple & Lightweight" icon="feather">
+    Define tools **declaratively** in simple JSON files.
+    No complex server setup, no vendor-specific APIs – just clean, readable
+    schemas that anyone can understand and review.
+  </Card>
+
+<Card title="Universal Compatibility" icon="globe">
+  Works with every programming language and framework. Whether you're using
+  Python, Node.js, or any other language, MCI includes operations which are
+  available in any programming language
 </Card>
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
+<Card title="Secure by Design" icon="shield-check">
+  **Easy to Review & Audit** Your entire toolset fits in a single JSON file
+  that's easy to review – even by an LLM. No more black-box servers or
+  third-party code accessing your sensitive data.
 </Card>
+
+<Card title="Multiple Execution Types" icon="code">
+  **HTTP • CLI • File • Text**: Wrap REST APIs, command-line tools, file
+  operations, and text templates – all from the same unified interface. Perfect
+  for integrating diverse systems and workflows.
+</Card>
+
+<Card title="Built-in Authentication" icon="key">
+  **API Key • Bearer Token • Basic Auth • OAuth2** Comprehensive authentication
+  support built right into the schema. Securely connect to any service without
+  writing custom authentication logic.
+</Card>
+
+<Card title="Advanced Templating" icon="wrench">
+  **Dynamic Values • Conditionals • Loops** Powerful template engine with
+  environment variable substitution, conditional logic, and iteration for
+  complex, dynamic tool execution.
+</Card>
+
+</CardGroup>
+
+<Info>
+  MCI makes AI tool development accessible to everyone by using JSON schemas
+  that work in **every programming language**. It's a lightweight alternative to
+  complex systems like MCP, living right in your project repo.
+</Info>
+
+## The Vision: Simplifying AI Development
+
+MCP is a great tool that allows to create servers and tools with complex logic,
+but in practice, it turned out that a lot of MCP servers are just API or CLI tool wrappers.
+And prompts? Have you ever used "prompts" feature of MCP? And it is the entire server in your infrastructure.
+
+So, sometimes MCP can be quite an overhead. **MCI changes everything** by bringing the simplicity and universality of JSON to AI tool development, acting more like a supplement to MCP than alternative.
+
+You know, HTTP request, terminal command & reading file are basic features that every programming language supports. And sometimes (pretty often), it is what the AI needs as a tool, but framed, described, standardized, reusable, shareable and secure. That's what the MCI is!
+
+### How MCI Makes AI Development Better
+
+<Steps>
+<Step title="Universal Standard">
+  **One Schema, Every Language**
+  
+  JSON works everywhere. Your MCI tools work in Python today, Node.js tomorrow, and any future language your team adopts. No rewrites, no vendor lock-in.
+</Step>
+
+<Step title="Instant Shareability">
+  Share your entire AI toolset by copying a single JSON file. Teams can
+  collaborate on tools like they collaborate on code – with version control,
+  reviews, and easy distribution.
+</Step>
+
+<Step title="LLM-Friendly Design">
+  The simple JSON format means LLMs can help you build tools. For example, Share
+  API documentation with an AI, and it can generate whole MCI schema in minutes
+  – not hours or days.
+</Step>
+
+<Step title="Maximum Flexibility">
+  One `.mci.json` file for your whole project, separate files per agent, one
+  file per API, or mix tools from different authors. It doesn't matter – it's
+  not 10 servers to initialize, it's just 10 files in your repo.
+</Step>
+
+<Step title="Security & Trust">
+  **Transparent & Auditable**
+  
+  Every tool is defined in plain JSON that humans and AI can easily review. No hidden server code, no mysterious third-party services – just transparent, auditable tool definitions.
+</Step>
+</Steps>
+
+## Quick Example
+
+See how simple it is to create and use AI tools with MCI:
+
+<CodeGroup>
+```json tool-definition.mci.json
+{
+  "tools": [
+    {
+      "name": "greet_user",
+      "description": "Generate a personalized greeting message",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "user's name"
+          }
+        },
+        "required": ["username"]
+      },
+      "execution": {
+        "type": "text",
+        "text": "Hello, {{props.username}}! Welcome to MCI."
+      }
+    }
+  ]
+}
+```
+
+```python Python Usage
+from mcipy import MCIClient
+
+# Initialize with your schema
+client = MCIClient(json_file_path="tool-definition.mci.json")
+
+# Execute the tool
+result = client.execute(
+    tool_name="greet_user",
+    properties={"username": "Alice"}
+)
+
+print(result)  # "Hello Alice! Welcome to MCI."
+```
+
+</CodeGroup>
+
+<Check>
+  **That's it!** You've just defined and executed your first MCI tool. Scale
+  this to hundreds of tools across your entire AI application.
+</Check>
+
+## Coming Soon
+
+<Info>
+  The Python adapter is ready and battle-tested with 92%+ test coverage. More
+  language adapters are on the way!
+</Info>
+
+<CardGroup cols={3}>
+  <Card title="Node.js Adapter" icon="node-js">
+    **In Development** Full TypeScript support with the same simple API. Perfect
+    for JavaScript and Node.js applications.
+  </Card>
+
+{" "}
+
+<Card title="Go Adapter" icon="golang">
+  **Planned** High-performance Go implementation for system-level tools and
+  microservices.
+</Card>
+
+  <Card title="PHP Adapter" icon="php">
+    **Planned** Bringing MCI to the PHP ecosystem for web applications and CMS
+    integrations.
+  </Card>
+</CardGroup>
+
+## Sponsors
+
+<Warning>
+**No Sponsors Yet** – But You Can Change That!
+
+This project is built and maintained by individual developers with passion for simplifying AI development. We're not backed by tech companies or funded in any way. Any help will be appreciated!
+
+</Warning>
+
+**Want to support MCI's development?**
+
+- 🐛 Report bugs and suggest features
+- 💻 Contribute code, documentation, or examples
+- 📢 Spread the word and share the project
+- 💝 Become a sponsor to support ongoing development
+
+We offer different sponsorship tiers with exclusive perks:
+
+- 🚀 **Visibility** in our channels
+- 🎯 **Priority support** for your use cases
+- 📚 **Custom implementations** and examples
+- 🏆 **Recognition** in our documentation and releases
+
+**Contact us:** [revaz@usemci.dev](mailto:revaz@usemci.dev)
+
+## Common Use Cases
+
+<Info>
+  MCI excels in scenarios where you need simple, reliable tool integration
+  without the complexity of full server deployments.
+</Info>
+
+<AccordionGroup>
+<Accordion title="🔗 API Integration & Wrapping">
+**Transform any REST API into an AI-friendly tool**
+
+Perfect for wrapping third-party APIs like weather services, payment processors, or internal microservices. MCI handles authentication, request formatting, and response processing automatically.
+
+```json
+{
+  "name": "get_weather",
+  "execution": {
+    "type": "http",
+    "method": "GET",
+    "url": "https://api.weather.com/current",
+    "auth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+  }
+}
+```
+
+</Accordion>
+
+<Accordion title="🛠️ DevOps & System Administration">
+**Automate infrastructure tasks with CLI tool integration**
+
+Wrap command-line tools like Docker, Git, AWS CLI, or custom scripts. Perfect for deployment automation, monitoring, and system management tasks.
+
+```json
+{
+  "name": "deploy_service",
+  "execution": {
+    "type": "cli",
+    "command": "docker",
+    "args": ["deploy", "--stack", "{{props.service_name}}"],
+    "cwd": "{{env.DEPLOY_PATH}}"
+  }
+}
+```
+
+</Accordion>
+
+<Accordion title="📊 Data Processing & Analytics">
+**Create data pipelines and processing workflows**
+
+Chain together data transformation tools, database queries, and analytics scripts. Ideal for ETL processes, report generation, and data analysis workflows.
+
+</Accordion>
+
+<Accordion title="🤖 AI Agent Tool Libraries">
+**Build comprehensive tool libraries for AI agents**
+
+Create specialized toolsets for different agent roles - customer service bots, development assistants, or data analysis agents. Easy to share and maintain across projects.
+
+</Accordion>
+
+<Accordion title="🔄 Workflow Automation">
+**Orchestrate complex multi-step processes**
+
+Combine different execution types to create sophisticated workflows. Perfect for marketing, content publishing, or business process automation.
+
+</Accordion>
+
+<Accordion title="🏢 Prompts management">
+
+Use File execution to process complex Markdown or XML prompts
+
+```json
+{
+  "name": "support_assistant_instructions",
+  "execution": {
+    "type": "file",
+    "path": "./instructions.md",
+    "enableTemplating": true
+  }
+}
+```
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="Get Started Now with Python"
+    icon="rocket"
+    href="/python/quickstart"
+  >
+    Jump into the quickstart guide and build your first MCI tool in minutes
+  </Card>
+  <Card
+    title="Join the Community"
+    icon="users"
+    href="https://github.com/Model-Context-Interface/mci-py/discussions"
+  >
+    Connect with other developers and share your MCI tools
+  </Card>
+</CardGroup>

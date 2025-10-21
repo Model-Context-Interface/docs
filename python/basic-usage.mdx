@@ -1,0 +1,429 @@
+---
+title: "Basic Usage"
+description: "Learn the fundamentals of using the MCI Python adapter"
+---
+
+# Basic Usage
+
+This guide covers the essential patterns for working with the MCI Python adapter, from client initialization to tool execution and error handling.
+
+## Client Initialization
+
+### Basic Setup
+
+```python
+from mcipy import MCIClient
+
+# Initialize with your schema file
+client = MCIClient(json_file_path="my-tools.mci.json")
+```
+
+### With Environment Variables
+
+Environment variables are crucial for handling secrets and configuration:
+
+```python
+import os
+from mcipy import MCIClient
+
+client = MCIClient(
+    json_file_path="tools.mci.json",
+    env_vars={
+        "API_KEY": os.getenv("MY_API_KEY"),
+        "DATABASE_URL": os.getenv("DATABASE_URL"),
+        "ENVIRONMENT": "production",
+        "USERNAME": "demo_user"
+    }
+)
+```
+
+<Warning>
+  Never hardcode API keys or passwords in your schema files. Always use
+  environment variables for sensitive information.
+</Warning>
+
+### Multiple Clients
+
+You can create multiple client instances for different schema files:
+
+```python
+# Client for API tools
+api_client = MCIClient(
+    json_file_path="api-tools.mci.json",
+    env_vars={"API_KEY": "key1"}
+)
+
+# Client for CLI tools
+cli_client = MCIClient(
+    json_file_path="cli-tools.mci.json",
+    env_vars={"WORKSPACE": "/home/user"}
+)
+```
+
+## Tool Discovery
+
+### List Available Tools
+
+```python
+# Get tool names as a list
+tool_names = client.list_tools()
+print(f"Available tools: {tool_names}")
+# Output: ['greet_user', 'get_weather', 'search_files']
+
+# Get full tool objects
+tools = client.tools()
+for tool in tools:
+    print(f"- {tool.name}: {tool.title}")
+    print(f"  Description: {tool.description}")
+```
+
+### Get Tool Information
+
+```python
+# Get input schema for a specific tool
+schema = client.get_tool_schema("greet_user")
+print(f"Required properties: {schema.get('required', [])}")
+print(f"Properties: {list(schema.get('properties', {}).keys())}")
+
+# Example output:
+# Required properties: ['username']
+# Properties: ['username']
+```
+
+### Tool Filtering
+
+Filter tools to work with specific subsets:
+
+```python
+# Include only specific tools
+weather_client = client.only(["get_weather", "get_forecast"])
+print(f"Weather tools: {weather_client.list_tools()}")
+
+# Exclude dangerous tools
+safe_client = client.without(["delete_data", "admin_reset"])
+print(f"Safe tools: {safe_client.list_tools()}")
+
+# Chain filtering
+filtered_client = client.only(["tool1", "tool2", "tool3"]) \
+                        .without(["tool2"])
+```
+
+## Tool Execution
+
+### Basic Execution
+
+```python
+# Execute a tool with properties
+result = client.execute(
+    tool_name="greet_user",
+    properties={"username": "Alice"}
+)
+
+# The result object contains the execution outcome
+print(f"Success: {not result.isError}")
+print(f"Content: {result.content}")
+```
+
+### Error Handling
+
+Always check the `isError` property before using results:
+
+```python
+result = client.execute(
+    tool_name="my_tool",
+    properties={"param1": "value"}
+)
+
+if result.isError:
+    print(f"❌ Error occurred: {result.error}")
+    # Handle error case - maybe retry, log, or return default
+    return None
+else:
+    print(f"✅ Success: {result.content}")
+    # Process successful result
+    return result.content
+```
+
+### Handling Different Result Types
+
+Results can contain various types of content depending on the tool:
+
+```python
+# Text execution results
+text_result = client.execute("generate_message", {"name": "John"})
+if not text_result.isError:
+    message = text_result.content  # String content
+
+# CLI execution results
+cli_result = client.execute("list_files", {"directory": "/tmp"})
+if not cli_result.isError:
+    file_list = cli_result.content.splitlines()  # Parse command output
+
+# HTTP execution results
+api_result = client.execute("get_user_data", {"user_id": "123"})
+if not api_result.isError:
+    # Content might be JSON string from API response
+    import json
+    try:
+        user_data = json.loads(api_result.content)
+    except json.JSONDecodeError:
+        # Handle non-JSON response
+        raw_response = api_result.content
+```
+
+## Tool Schema Structure
+
+Understanding the tool definition structure helps you create and work with tools effectively:
+
+```json
+{
+  "name": "tool_identifier",
+  "title": "Human-Readable Tool Name",
+  "description": "What this tool does",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "param1": {
+        "type": "string",
+        "description": "Description of parameter 1"
+      },
+      "param2": {
+        "type": "number",
+        "description": "Description of parameter 2"
+      }
+    },
+    "required": ["param1"]
+  },
+  "execution": {
+    "type": "text|file|cli|http"
+    // ... execution-specific configuration
+  }
+}
+```
+
+### Input Schema Types
+
+MCI supports standard JSON Schema types, just like the MCP:
+
+<AccordionGroup>
+<Accordion title="String Parameters">
+```json
+{
+  "username": {
+    "type": "string",
+    "description": "User's username",
+    "minLength": 3,
+    "maxLength": 20
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Number Parameters">
+```json
+{
+  "age": {
+    "type": "number", 
+    "description": "User's age in years",
+    "minimum": 0,
+    "maximum": 150
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Boolean Parameters">
+```json
+{
+  "include_metadata": {
+    "type": "boolean",
+    "description": "Whether to include additional metadata"
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Array Parameters">
+```json
+{
+  "tags": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "description": "List of tags to apply"
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Object Parameters">
+```json
+{
+  "config": {
+    "type": "object",
+    "properties": {
+      "host": {"type": "string"},
+      "port": {"type": "number"}
+    },
+    "required": ["host"],
+    "description": "Server configuration"
+  }
+}
+```
+</Accordion>
+</AccordionGroup>
+
+## Complete Example
+
+Here's a comprehensive example putting it all together:
+
+```python main.py
+#!/usr/bin/env python3
+"""
+Complete MCI basic usage example.
+"""
+
+import os
+from datetime import datetime
+from mcipy import MCIClient
+
+def main():
+    # Initialize client with environment variables
+    client = MCIClient(
+        json_file_path="./tools.mci.json",
+        env_vars={
+            "CURRENT_DATE": datetime.now().strftime("%Y-%m-%d"),
+            "API_KEY": os.getenv("DEMO_API_KEY", "demo-key-123"),
+            "USERNAME": "demo_user"
+        }
+    )
+
+    print("🚀 MCI Python Adapter Demo")
+    print("=" * 40)
+
+    # List all available tools
+    print("\n📋 Available tools:")
+    tools = client.tools()
+    for tool in tools:
+        required_params = tool.inputSchema.get('required', [])
+        print(f"  • {tool.name}: {tool.title}")
+        print(f"    Required: {required_params}")
+
+    # Execute a simple text tool
+    print("\n💬 Executing greeting tool...")
+    result = client.execute(
+        tool_name="greet_user",
+        properties={"username": "Alice"}
+    )
+
+    if result.isError:
+        print(f"   ❌ Error: {result.error}")
+    else:
+        print(f"   ✅ Result: {result.content}")
+
+    # Filter tools and show the difference
+    print("\n🔍 Tool filtering example:")
+    all_tools = client.list_tools()
+    safe_tools = client.without(["dangerous_tool"]).list_tools()
+    print(f"   All tools: {len(all_tools)}")
+    print(f"   Safe tools: {len(safe_tools)}")
+
+    # Get schema information
+    print("\n📊 Tool schema example:")
+    if "greet_user" in client.list_tools():
+        schema = client.get_tool_schema("greet_user")
+        print(f"   Properties: {list(schema.get('properties', {}).keys())}")
+        print(f"   Required: {schema.get('required', [])}")
+
+    print("\n✨ Demo completed successfully!")
+
+if __name__ == "__main__":
+    main()
+```
+
+## Best Practices
+
+<Tip>
+  **Environment Variables**: Always use environment variables for API keys,
+  database URLs, and other sensitive configuration.
+</Tip>
+
+<Tip>
+  **Error Handling**: Check `result.isError` before using `result.content` to
+  avoid processing failed executions.
+</Tip>
+
+<Tip>
+  **Tool Organization**: Use descriptive names and group related tools in
+  separate schema files for better organization.
+</Tip>
+
+<Tip>
+  **Schema Validation**: Define clear input schemas with proper types and
+  descriptions to make tools easier to use.
+</Tip>
+
+## Troubleshooting
+
+### Common Issues
+
+<AccordionGroup>
+<Accordion title="File Not Found Error">
+```
+FileNotFoundError: [Errno 2] No such file or directory: 'tools.mci.json'
+```
+
+**Solution**: Ensure the schema file path is correct and the file exists.
+
+```python
+import os
+if os.path.exists("tools.mci.json"):
+    client = MCIClient(json_file_path="tools.mci.json")
+else:
+    print("Schema file not found!")
+```
+
+</Accordion>
+
+<Accordion title="Tool Not Found">
+```
+Tool 'my_tool' not found
+```
+
+**Solution**: Check that the tool name matches exactly what's in your schema:
+
+```python
+available_tools = client.list_tools()
+print(f"Available tools: {available_tools}")
+```
+
+</Accordion>
+
+<Accordion title="Missing Required Parameters">
+```
+Missing required property: 'username'
+```
+
+**Solution**: Ensure all required parameters are provided:
+
+```python
+schema = client.get_tool_schema("my_tool")
+required = schema.get('required', [])
+print(f"Required parameters: {required}")
+```
+
+</Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+<Card title="Execution Types" icon="cog" href="/python/execution-types">
+  Learn about text, file, CLI, and HTTP execution types
+</Card>
+
+<Card title="Advanced Features" icon="rocket" href="/python/advanced-features">
+  Explore advanced patterns and optimization techniques
+</Card>
+</CardGroup>

@@ -1,0 +1,340 @@
+---
+title: "Introduction"
+description: "Understanding MCI - A lightweight, universal approach to AI tool development"
+---
+
+# Introduction to MCI
+
+The **Model Context Interface (MCI)** is an open-source, platform-agnostic system that revolutionizes how you create and share AI agent tools. By leveraging simple JSON schemas, MCI enables developers to define collections of tools that work universally across programming languages and platforms.
+
+## What is MCI?
+
+<CardGroup cols={2}>
+<Card title="Universal Tool Definition" icon="globe">
+  Define AI tools using standardized JSON schemas that work in **every programming language** - Python, Node.js, Go, PHP, and beyond.
+</Card>
+
+<Card title="Multiple Execution Types" icon="code">
+  Support for **HTTP**, **CLI**, **File**, and **Text** operations, allowing you
+  to wrap REST APIs, command-line tools, file operations, and templates.
+</Card>
+
+<Card title="Built-in Authentication" icon="key">
+  Comprehensive authentication support including **API Keys**, **Bearer
+  Tokens**, **Basic Auth**, and **OAuth2** - all configured declaratively.
+</Card>
+
+<Card title="Advanced Templating" icon="wrench">
+  Powerful template engine with environment variables, conditional logic (`@if`), and iteration (`@foreach`) for dynamic tool execution.
+</Card>
+</CardGroup>
+
+<Info>
+  MCI transforms complex AI tool development into simple JSON configuration.
+  Your entire toolset fits in a single file that's easy to review, share, and
+  maintain.
+</Info>
+
+## Why Use MCI?
+
+### 🚀 **Simplicity Over Complexity**
+
+Unlike complex server-based solutions, MCI tools are **declarative JSON files** that live directly in your project repository. No servers to maintain, no complex deployments - just clean, readable schemas.
+
+<CodeGroup>
+```json Simple Tool Definition
+{
+  "name": "greet_user",
+  "description": "Generate a personalized greeting",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "username": { "type": "string" }
+    }
+  },
+  "execution": {
+    "type": "text",
+    "text": "Hello, {{props.username}}! Welcome to MCI."
+  }
+}
+```
+
+```python Instant Usage
+from mcipy import MCIClient
+
+client = MCIClient(json_file_path="tools.mci.json")
+result = client.execute("greet_user", {"username": "Alice"})
+# Output: "Hello, Alice! Welcome to MCI."
+```
+
+</CodeGroup>
+
+### 🔒 **Secure by Design**
+
+Your entire toolset is **transparent and auditable**. Every tool is defined in plain JSON that humans and AI can easily review. No black-box servers, no mysterious third-party code accessing your data.
+
+### 🌍 **Universal Compatibility**
+
+Write once, run everywhere. MCI works with any programming language because it uses operations available in **every programming language** - HTTP requests, CLI commands, file operations, and text processing.
+
+### 📦 **Maximum Flexibility**
+
+<Tabs>
+<Tab title="Project-Wide Tools">
+One `.mci.json` file containing all tools for your entire project.
+</Tab>
+
+<Tab title="Agent-Specific Tools">
+  Separate files per AI agent, each with their specialized toolset.
+</Tab>
+
+<Tab title="API Wrappers">
+  One file per external API you want to wrap and use.
+</Tab>
+
+<Tab title="Mixed Sources">
+Combine tools from different authors - it's not 10 servers to initialize, just 10 files in your repo.
+</Tab>
+</Tabs>
+
+## How MCI Differs from MCP
+
+<Warning>
+  MCI is designed as a **supplement to MCP**, not a replacement. Each serves
+  different use cases in the AI tooling ecosystem.
+</Warning>
+
+| Aspect             | **MCI**                        | **MCP**                            |
+| ------------------ | ------------------------------ | ---------------------------------- |
+| **Complexity**     | Simple JSON files              | Full server implementations        |
+| **Use Case**       | API/CLI wrappers, simple tools | Complex logic, stateful operations |
+| **Languages**      | Universal (JSON-based)         | Language-specific servers          |
+| **Sharing**        | A few files                    | Whole project                      |
+| **Review**         | Easy JSON audit                | Full codebase review               |
+| **Infrastructure** | None required                  | Server infrastructure              |
+
+### When to Choose MCI
+
+<AccordionGroup>
+<Accordion title="🎯 Perfect for MCI">
+- **API Wrappers**: Wrapping REST APIs with authentication
+- **CLI Tool Integration**: Executing command-line tools
+- **Simple Workflows**: File operations and text templating
+- **Rapid Prototyping**: Quick tool development and iteration
+- **Easy Sharing**: Tools that need to be shared across teams
+- **Security-Conscious**: Environments requiring full auditability
+</Accordion>
+
+<Accordion title="⚡ Better with MCP">
+- **Complex Logic**: Tools requiring sophisticated business logic
+- **Stateful Operations**: Tools that maintain state across calls
+- **Real-time Features**: Streaming or real-time data processing
+- **Custom Protocols**: Non-standard communication requirements
+- **Performance Critical**: High-throughput, low-latency operations
+</Accordion>
+</AccordionGroup>
+
+<Tip>
+  **Pro Tip**: Many teams use both! Start with MCI for quick API wrappers and
+  simple tools, then graduate to MCP when you need complex server-side logic.
+</Tip>
+
+## Quick Start Example
+
+See MCI in action with this complete example:
+
+<Steps>
+<Step title="Create Your Schema">
+```json weather-tools.mci.json
+{
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "Get current weather for a city",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "city": { "type": "string" }
+        },
+        "required": ["city"]
+      },
+      "execution": {
+        "type": "http",
+        "method": "GET",
+        "url": "https://api.weather.com/current?q={{props.city}}",
+        "auth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-Key",
+          "value": "{{env.WEATHER_API_KEY}}"
+        }
+      }
+    }
+  ]
+}
+```
+</Step>
+
+<Step title="Use in Python">
+```python
+from mcipy import MCIClient
+
+client = MCIClient(
+json_file_path="weather-tools.mci.json",
+env_vars={"WEATHER_API_KEY": "your-key"}
+)
+
+weather = client.execute("get_weather", {"city": "London"})
+print(weather)
+
+````
+</Step>
+
+<Step title="Share Everywhere">
+Copy `weather-tools.mci.json` to any project, any language. It just works!
+</Step>
+</Steps>
+
+## What's Next: The MCI Ecosystem
+
+<Info>
+MCI is rapidly evolving with an ambitious roadmap to make AI tool development universally accessible.
+</Info>
+
+### 🔄 **Language Adapters**
+
+<CardGroup cols={3}>
+<Card title="Python ✅" icon="python">
+**Ready Now**
+Full-featured adapter with 92%+ test coverage and comprehensive authentication support.
+</Card>
+
+<Card title="Node.js 🚧" icon="node-js">
+**In Development**
+TypeScript-first implementation with the same simple API. Coming Q1 2024.
+</Card>
+
+<Card title="Go 📋" icon="golang">
+**Planned**
+High-performance Go implementation for system-level tools and microservices.
+</Card>
+
+<Card title="PHP 📋" icon="php">
+**Planned**
+Bringing MCI to the PHP ecosystem for web applications and CMS integrations.
+</Card>
+
+<Card title="Rust 📋" icon="rust">
+**Planned**
+Ultra-fast Rust adapter for performance-critical applications.
+</Card>
+
+<Card title="Java 📋" icon="java">
+**Planned**
+Enterprise-ready Java implementation for large-scale applications.
+</Card>
+</CardGroup>
+
+### 📚 **MCI Library**
+
+A centralized repository of community-contributed MCI tools:
+
+- **Curated Collections**: Pre-built tools for popular APIs (GitHub, Slack, AWS)
+- **Quality Assurance**: All tools tested and documented
+- **Version Management**: Semantic versioning for tool schemas
+- **Discovery**: Search and browse tools by category and functionality
+
+### 📦 **MCI Package Manager**
+
+Coming soon - a dedicated package manager for MCI tools:
+
+<Tabs>
+<Tab title="Easy Installation">
+```bash
+mci install github-tools slack-integration aws-s3
+````
+
+Install tools from the community library with a single command.
+
+</Tab>
+
+<Tab title="Dependency Management">
+```json mci.config.json
+{
+  "dependencies": {
+    "github-tools": "^1.2.0",
+    "slack-integration": "^2.1.0"
+  }
+}
+```
+Manage tool versions and dependencies like any other package.
+</Tab>
+
+<Tab title="Publishing">
+  ```bash mci publish my-amazing-tools.mci.json ``` Share your tools with the
+  global MCI community effortlessly.
+</Tab>
+
+<Tab title="Updates">
+```bash
+mci update
+```
+Keep your tool library up-to-date with the latest versions and security fixes.
+</Tab>
+</Tabs>
+
+### 🎯 **Planned Features**
+
+<AccordionGroup>
+<Accordion title="Enhanced Template Engine">
+**Jinja2 Integration**: Replace the current basic template engine with full Jinja2 support for more robust templating options.
+
+**Include Directive**: Add `@include("path/to/file.md")` to simplify reusing prompt parts and templates.
+
+</Accordion>
+
+<Accordion title="Advanced Authentication">
+**OAuth2 Flows**: Complete OAuth2 implementation with refresh tokens and PKCE support.
+
+**Dynamic Credentials**: Runtime credential resolution and rotation.
+
+</Accordion>
+
+<Accordion title="Tool Composition">
+**Pipeline Tools**: Chain multiple tools together in declarative workflows.
+
+**Conditional Execution**: Execute tools based on runtime conditions and previous results.
+
+</Accordion>
+
+<Accordion title="IDE Integration">
+**VS Code Extension**: Syntax highlighting, validation, and debugging for MCI schemas.
+
+**IntelliSense**: Auto-completion and inline documentation for schema properties.
+
+</Accordion>
+</AccordionGroup>
+
+## Getting Started
+
+<CardGroup cols={2}>
+
+<Card title="📖 Schema Reference" icon="book" href="/schema_reference">
+  Complete documentation of the MCI JSON schema with examples and best
+  practices.
+</Card>
+
+<Card title="🐍 Python Guide" icon="python" href="/python/quickstart">
+  Comprehensive Python adapter documentation with advanced usage patterns.
+</Card>
+
+<Card title="💬 Join Community" icon="users" href="https://github.com/Model-Context-Interface/mci-py/discussions">
+Connect with other developers, share tools, and get help from the community.
+</Card>
+</CardGroup>
+
+<Check>
+  **Ready to revolutionize your AI development?** MCI makes building powerful AI
+  tools as simple as writing JSON. Start with the quickstart guide and join
+  thousands of developers already using MCI.
+</Check>
