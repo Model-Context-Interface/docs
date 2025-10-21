@@ -97,6 +97,11 @@
         "label": "GitHub",
         "href": "https://github.com/Model-Context-Interface",
         "icon": "github"
+      },
+      {
+        "label": "Star the repo",
+        "href": "https://github.com/Model-Context-Interface/mci-py",
+        "icon": "star"
       }
     ]
   },
