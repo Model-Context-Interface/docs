@@ -34,5 +34,12 @@ html[data-theme="dark"],
 }
 
 .peer.is-center ~ .peer-\[\.is-center\]\:max-w-3xl {
-  max-width: 75%;
+  max-width: 95%;
+}
+
+/* Desktop only - 75% width */
+@media (min-width: 768px) {
+  .peer.is-center ~ .peer-\[\.is-center\]\:max-w-3xl {
+    max-width: 75%;
+  }
 }
