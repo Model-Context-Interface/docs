@@ -235,11 +235,7 @@ Toolsets are loaded in the main schema file using the `toolsets` field.
 ```json
 {
   "schemaVersion": "1.0",
-  "toolsets": [
-    { "name": "weather" },
-    { "name": "github" },
-    { "name": "database" }
-  ]
+  "toolsets": ["weather", "github", { "name": "database" }]
 }
 ```
 
@@ -249,7 +245,7 @@ Toolsets are loaded in the main schema file using the `toolsets` field.
 {
   "schemaVersion": "1.0",
   "libraryDir": "./toolsets",
-  "toolsets": [{ "name": "weather" }]
+  "toolsets": ["weather"]
 }
 ```
 
