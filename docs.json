@@ -27,7 +27,22 @@
           {
             "group": "Getting Started",
             "pages": [
-              "documentation/introduction",
+              "documentation/introduction"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "documentation/structure",
+              "documentation/tools",
+              "documentation/toolsets",
+              "documentation/mcp_servers",
+              "documentation/templates"
+            ]
+          },
+          {
+            "group": "Learn more",
+            "pages": [
               "documentation/schema-reference"
             ]
           }
@@ -40,13 +55,14 @@
             "group": "Getting Started",
             "pages": [
               "python/quickstart",
-              "python/basic-usage"
+              "python/basic-usage",
+              "python/execution-types",
+              "python/mcp_integration"
             ]
           },
           {
             "group": "Learn more",
             "pages": [
-              "python/execution-types",
               "python/api-reference"
             ]
           }
@@ -64,18 +80,7 @@
         ]
       },
       {
-        "tab": "GoLang ⏳",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "golang/quickstart"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "PHP ⏳",
+        "tab": "By Community",
         "groups": [
           {
             "group": "Getting Started",

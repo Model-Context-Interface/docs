@@ -18,35 +18,23 @@ Welcome to the MCI Python Adapter! This guide will help you get started quickly 
 
 First, install `uv` if you haven't already:
 
-<Tabs>
-<Tab title="macOS/Linux">
 ```bash
+# macOS or Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-</Tab>
 
-<Tab title="macOS (Homebrew)">```bash brew install uv ```</Tab>
-
-<Tab title="Windows">
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+# Or using Homebrew on macOS
+brew install uv
 ```
-</Tab>
-</Tabs>
 
 Then install the MCI Python adapter:
 
-<CodeGroup>
-```bash Install from PyPI
+```bash
+# Install from PyPI
 uv pip install mci-py
-```
 
-```bash Install with uv add
-# If using uv project
+# Or install with uv add (if using uv project)
 uv add mci-py
 ```
-
-</CodeGroup>
 
 ### Option 2: Using pip
 
@@ -61,26 +49,25 @@ import mcipy
 print("MCI Python Adapter installed successfully!")
 ```
 
-## Your First Tool
+## Quick Example
 
-Let's create a simple tool to get you started.
+Here's a complete example to get you started in under 5 minutes:
 
-<Steps>
-<Step title="Create a Tool Schema File">
-Create a file named `my-tools.mci.json` with your tool definitions:
+### 1. Create a Tool Schema File
 
-```json my-tools.mci.json
+Create a file named `my-tools.mci.json`:
+
+```json
 {
   "schemaVersion": "1.0",
   "metadata": {
-    "name": "My Tools",
-    "description": "A collection of useful tools"
+    "name": "My First Tools",
+    "description": "A simple collection of tools"
   },
   "tools": [
     {
       "name": "greet_user",
-      "title": "User Greeting",
-      "description": "Generate a personalized greeting message",
+      "description": "Generate a personalized greeting",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -95,125 +82,133 @@ Create a file named `my-tools.mci.json` with your tool definitions:
         "type": "text",
         "text": "Hello, {{props.username}}! Welcome to MCI."
       }
+    },
+    {
+      "name": "get_weather",
+      "description": "Fetch weather information",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "City name"
+          }
+        },
+        "required": ["location"]
+      },
+      "execution": {
+        "type": "http",
+        "method": "GET",
+        "url": "https://api.example.com/weather",
+        "params": {
+          "location": "{{props.location}}"
+        }
+      }
     }
   ]
 }
 ```
 
-</Step>
+### 2. Write Python Code
 
-<Step title="Create a Python Script">
-Create a Python file to use your tools:
+Create a file named `example.py`:
 
-```python main.py
+```python
 from mcipy import MCIClient
 
-# Initialize with your schema file
+# Initialize the client
 client = MCIClient(
-    json_file_path="my-tools.mci.json",
+    schema_file_path="my-tools.mci.json",
     env_vars={
-        "USERNAME": "demo_user"
+        "API_KEY": "your-secret-key"
     }
 )
 
-# Execute the tool
+# List available tools
+print("Available tools:")
+for tool_name in client.list_tools():
+    print(f"  - {tool_name}")
+
+# Execute a tool
 result = client.execute(
     tool_name="greet_user",
     properties={"username": "Alice"}
 )
 
 # Check the result
-if result.isError:
-    print(f"Error: {result.error}")
+if result.result.isError:
+    print(f"Error: {result.result.content[0].text}")
 else:
-    print(f"Success: {result.content}")
+    print(f"Success: {result.result.content[0].text}")
 ```
 
-</Step>
-
-<Step title="Run Your Tool">
-Execute your Python script:
+### 3. Run Your Code
 
 ```bash
-python main.py
+python example.py
 ```
 
-<Check>
-You should see: `Success: Hello, Alice! Welcome to MCI.`
-</Check>
-</Step>
-</Steps>
+**Output:**
 
-## Quick Examples
-
-### List Available Tools
-
-```python
-# Get all tool names
-tool_names = client.list_tools()
-print(f"Available tools: {tool_names}")
-
-# Get full tool objects
-tools = client.tools()
-for tool in tools:
-    print(f"- {tool.name}: {tool.title}")
+```
+Available tools:
+  - greet_user
+  - get_weather
+Success: Hello, Alice! Welcome to MCI.
 ```
 
-### Filter Tools
+## What's Next?
 
-```python
-# Include only specific tools
-weather_tools = client.only(["get_weather", "get_forecast"])
+Now that you've seen the basics, explore these resources to learn more:
 
-# Exclude specific tools
-safe_tools = client.without(["delete_data", "admin_tools"])
-```
+- **[Basic Usage Guide](basic_usage.md)** - Detailed usage patterns and examples
+- **[Concepts](concepts/README.md)** - Understand MCI core concepts:
+  - [Structure](concepts/structure.md) - Project structure and organization
+  - [Tools](concepts/tools.md) - Different tool execution types
+  - [Toolsets](concepts/toolsets.md) - Organizing and sharing tools
+  - [MCP Servers](concepts/mcp_servers.md) - Integrating MCP servers
+  - [Templates](concepts/templates.md) - Advanced templating features
+- **[Schema Reference](schema_reference.md)** - Complete schema documentation
+- **[API Reference](api_reference.md)** - Detailed API documentation
 
-### Get Tool Schema
+## Key Concepts at a Glance
 
-```python
-# Retrieve input schema for a tool
-schema = client.get_tool_schema("greet_user")
-print(f"Required properties: {schema.get('required', [])}")
-print(f"Properties: {list(schema.get('properties', {}).keys())}")
-```
+### Execution Types
 
-## Template Placeholders
+MCI supports four execution types:
 
-MCI supports powerful templating with placeholders:
+- **Text**: Return templated text directly
+- **File**: Read file contents with template substitution
+- **CLI**: Execute command-line tools
+- **HTTP**: Make HTTP API requests
 
-- `{{props.propertyName}}` - Access input properties
+### Template Placeholders
+
+Use placeholders in your configurations:
+
+- `{{props.fieldName}}` - Access input properties
 - `{{env.VARIABLE_NAME}}` - Access environment variables
-- `{{input.fieldName}}` - Alias for `{{props.fieldName}}`
 
-<Tip>
-  Environment variables are the recommended way to handle secrets and
-  configuration values.
-</Tip>
+### Tool Organization
 
-## Next Steps
-
-<CardGroup cols={2}>
-<Card title="Basic Usage" icon="play" href="/python/basic-usage">
-  Learn client initialization, tool execution, and error handling patterns.
-</Card>
-
-<Card title="Execution Types" icon="cog" href="/python/execution-types">
-  Explore text, file, CLI, and HTTP execution types with examples.
-</Card>
-
-<Card title="Advanced Features" icon="rocket" href="/python/advanced-features">
-  Master environment variables, filtering, and best practices.
-</Card>
-
-<Card title="API Reference" icon="book" href="/api_reference">
-  Detailed documentation of all classes and methods.
-</Card>
-</CardGroup>
+- **Tools**: Individual actions defined in your schema
+- **Toolsets**: Reusable collections of tools in separate files
+- **MCP Servers**: Integration with external MCP servers
 
 ## Common Use Cases
 
-- **API Integration**: Use HTTP execution to integrate with REST APIs
-- **Prompts management**: Use File execution to process complex Markdown or XML prompts
-- **Reporting**: Use Text execution to generate formatted reports
-- **Data Processing**: Combine multiple execution types for complex workflows
+- **API Integration**: Use HTTP execution to integrate REST APIs
+- **DevOps Automation**: Use CLI execution for system tasks
+- **Configuration Management**: Use File execution for config templates
+- **Reporting**: Use Text execution for formatted reports
+- **Data Processing**: Combine multiple execution types
+
+## Getting Help
+
+If you encounter issues or have questions:
+
+- Check the [GitHub Issues](https://github.com/Model-Context-Interface/mci-py/issues)
+- Review the [PRD.md](../PRD.md) for design decisions
+- Examine the [example.py](../example.py) for working code
+
+Happy building with MCI! 🚀
