@@ -1,0 +1,119 @@
+---
+title: "Commands"
+description: "mcix commands reference"
+---
+
+### `mci install`
+
+Bootstrap a new MCI project with starter configuration.
+
+```bash
+# Create JSON configuration (default)
+uvx mcix install
+
+# Create YAML configuration
+uvx mcix install --yaml
+```
+
+Creates:
+
+- `mci.json` (or `mci.yaml`) - Main configuration file
+- `mci/` directory - Library of toolsets
+- `mci/.gitignore` - Excludes generated files
+
+### `mci list`
+
+Display all available tools from your configuration.
+
+```bash
+# List all tools (table format)
+uvx mcix list
+
+# List with verbose details
+uvx mcix list --verbose
+
+# Filter by tags
+uvx mcix list --filter tags:api,database
+
+# Export to JSON
+uvx mcix list --format json
+
+# Export to YAML
+uvx mcix list --format yaml
+```
+
+**Filter types**:
+
+- `tags:tag1,tag2` - Include tools with any of these tags
+- `only:tool1,tool2` - Include only specific tools
+- `except:tool1,tool2` - Exclude specific tools
+- `toolsets:ts1,ts2` - Include tools from specific toolsets
+- `without-tags:tag1,tag2` - Exclude tools with these tags
+
+### `mci validate`
+
+Validate your MCI schema for correctness.
+
+```bash
+# Validate default configuration
+uvx mcix validate
+
+# Validate specific file
+uvx mcix validate --file custom.mci.json
+```
+
+Checks for:
+
+- Schema structure and syntax
+- Required fields
+- Data types
+- Tool definitions
+- Toolset references
+- MCP command availability (warnings)
+
+### `mci add`
+
+Add toolset references to your schema.
+
+```bash
+# Add a toolset
+uvx mcix add weather-tools
+
+# Add with filter
+uvx mcix add analytics --filter=only:Tool1,Tool2
+
+# Add with tag filter
+uvx mcix add api-tools --filter=tags:api,database
+
+# Add to custom file
+uvx mcix add weather-tools --path=custom.mci.json
+```
+
+Automatically preserves your file format (JSON stays JSON, YAML stays YAML).
+
+### `mci run`
+
+Launch an MCP server that dynamically serves your tools.
+
+```bash
+# Run with default configuration
+uvx mcix run
+
+# Run with specific file
+uvx mcix run --file custom.mci.json
+
+# Run with filtered tools
+uvx mcix run --filter tags:production
+
+# Run excluding tools
+uvx mcix run --filter except:deprecated_tool
+```
+
+The server:
+
+- Loads tools from your MCI schema
+- Converts them to MCP format
+- Listens on STDIO for MCP requests
+- Delegates execution back to MCIClient
+
+**Stop the server**: Press `Ctrl+C`

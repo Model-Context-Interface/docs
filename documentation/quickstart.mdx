@@ -1,0 +1,89 @@
+---
+title: "Quickstart"
+description: "Get started with MCI"
+---
+
+No installation needed! Run MCI directly using `uvx`
+
+<AccordionGroup>
+  <Accordion title="Install uv if you haven't already">
+    ```bash curl -LsSf https://astral.sh/uv/install.sh | sh ```
+  </Accordion>
+</AccordionGroup>
+
+1. **Initialize a new project**:
+
+   ```bash
+   uvx mcix install
+   ```
+
+   This creates `mci.json` with example tools and `mci/` directory with example toolsets.
+
+2. **List your tools**:
+
+   ```bash
+   uvx mcix list
+   uvx mcix list --file copilot.mci.json
+   ```
+
+   Example output:
+   ![alt text](/assets/list-output.png)
+
+3. **Validate your configuration**:
+
+   ```bash
+   uvx mcix validate
+   ```
+
+4. **Run an MCP server**:
+
+   ```bash
+   uvx mcix run
+   ```
+
+   Example from VS Code:
+   ![alt text](/assets/vscode-mcp.png)
+
+That's it! Your MCI tools are now available via the MCP protocol.
+
+### Optional: Install MCI Globally
+
+If you prefer to install MCI permanently:
+
+```bash
+# Install globally with uv
+uv tool install mcix
+
+# Then use without uvx prefix
+mcix install
+mcix list
+mcix run
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/Model-Context-Interface/mci-uvx.git
+cd mci-uvx
+uv sync --all-extras
+uv tool install --editable .
+```
+
+## Next Steps
+
+Now that you have MCI set up, explore these core concepts:
+
+<CardGroup cols={2}>
+  <Card title="Commands" icon="terminal" href="/documentation/commands">
+    Learn about all available MCI commands and their options.
+  </Card>
+  <Card title="Tools" icon="wrench" href="/documentation/tools">
+    Understand how to define and use tools in your MCI configuration.
+  </Card>
+  <Card title="Toolsets" icon="cubes" href="/documentation/toolsets">
+    Organize your tools into reusable toolsets.
+  </Card>
+  <Card title="MCP Servers" icon="server" href="/documentation/mcp_servers">
+    Learn how MCI integrates with the Model Context Protocol.
+  </Card>
+</CardGroup>

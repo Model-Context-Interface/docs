@@ -4,308 +4,820 @@ description: ""
 mode: "center"
 ---
 
-# Build Powerful AI Tools with Simple JSON Schemas
+# Build MCP Servers On Demand — No Code Required
 
-**Model Context Interface (MCI)** transforms how you create AI agent tools.
+**Model Context Interface (MCI)** is the fastest way to create and manage AI tools and MCP servers.
 
-Define collections of tools in a single JSON file, execute them anywhere, and share them effortlessly.
+Define tools in simple JSON or YAML files, use them programmatically in your code, or run them as MCP servers on the fly.
 
-No complex servers, no vendor lock-in – just pure simplicity.
+MCP is now a part of MCI — enhanced with tagging, filtering, caching, and toolset management.
 
 <CardGroup cols={2}>
-  <Card title="🚀 Get Started" href="/python/quickstart" horizontal>
-    Jump into the quickstart guide and build your first MCI tool in under 5
-    minutes with Python. Use it with any framework you like: ADK, LangChain,
-    CrewAI, etc.
+  <Card title="🚀 Get Started" href="/documentation/quickstart" horizontal>
+    Launch your first MCI-powered MCP server in under 5 minutes. Connect it to
+    Claude, VSCode, Cursor, or any MCP-compatible tool.
   </Card>
-  <Card
-    title="💻 Schema reference"
-    href="/documentation/schema-reference"
-    horizontal
-  >
-    Explore details about JSON schema - understand what capabilities does the
-    MCI have and how it can contribute to your projects
+  <Card title="🐍 Python Quickstart" href="/python/quickstart" horizontal>
+    Are you writing AI Agents? Use MCI programmatically in your Python code.
+    Integrate tools with LangChain, CrewAI, or any AI framework.
+  </Card>
+</CardGroup>
+
+## What's New in MCI?
+
+<Note>
+  **MCI is the next step.** MCP is now integrated into MCI with enhanced
+  features like tagging, filtering, caching, and toolset management. Use it
+  programmatically via adapters or run as MCP servers via the mcix CLI.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Run as MCP Server" icon="server" horizontal>
+    Use the **mcix CLI tool** to run MCI as an MCP server. Connect to Claude
+    Desktop, VSCode, Cursor, or any STDIO-based MCP client. Your tools become
+    instantly available in AI applications.
+  </Card>
+
+<Card title="Programmatic Usage" icon="code" horizontal>
+  Use **MCI adapters** (Python available now) to integrate tools directly into
+  your applications. Acts like an MCP client — discovers tools and executes them
+  from `mci.json` files programmatically.
+</Card>
+
+<Card title="Toolset Management" icon="boxes-stacked" horizontal>
+  Works like npm for AI tools. Your main `mci.json` links to Toolsets and MCP
+  servers stored in `./mci` directory. Organize, share, and reuse tool
+  collections effortlessly.
+</Card>
+
+<Card title="MCP Server Integration" icon="plug" horizontal>
+  Add any MCP server (HTTP or STDIO) to your config. Tools are cached locally
+  for configurable periods. Mix and match tools from multiple servers with
+  filtering and tagging.
+</Card>
+
+<Card title="Smart Caching" icon="bolt" horizontal>
+  MCP tools register statically from cached files. The actual MCP server is only
+  called during execution or when cache expires. Lightning-fast tool discovery
+  with minimal overhead.
+</Card>
+
+<Card title="YAML Support" icon="file-code" horizontal>
+  Write your schemas in JSON or YAML — whichever you prefer. Full YAML support
+  is now integrated for more readable, human-friendly configurations.
+</Card>
+
+<Card title="Multiple Configurations" icon="layer-group" horizontal>
+  Run different MCI setups on demand with `uvx mcix run --file
+  ./mci/toolset-name.json`. Create specialized servers for different use cases
+  or agents.
+</Card>
+
+  <Card title="Language Adapters" icon="puzzle-piece" horizontal>
+    **mci-py** adapter powers everything — MCP server mode, caching, toolsets,
+    and programmatic usage. More language adapters (Node.js, Go) coming soon.
   </Card>
 </CardGroup>
 
 ## Why Choose MCI?
 
 <CardGroup cols={3}>
-  <Card title="Simple & Lightweight" icon="feather">
-    Define tools **declaratively** in simple JSON files.
-    No complex server setup, no vendor-specific APIs – just clean, readable
-    schemas that anyone can understand and review.
+  <Card title="Two Ways to Use" icon="code-branch">
+    **MCP Server or Programmatic** Run as an MCP server via **mcix CLI**, or use
+    **mci-py adapter** programmatically in your Python code. Same features,
+    different deployment options.
   </Card>
 
-<Card title="Universal Compatibility" icon="globe">
-  Works with every programming language and framework. Whether you're using
-  Python, Node.js, or any other language, MCI includes operations which are
-  available in any programming language
+<Card title="MCP Server Creation" icon="wand-magic-sparkles">
+  **Build MCP servers on demand** Create custom MCP servers in seconds by
+  combining tools from multiple sources — other MCP servers, your own APIs, CLI
+  tools, and shared community toolsets.
 </Card>
 
-<Card title="Secure by Design" icon="shield-check">
-  **Easy to Review & Audit** Your entire toolset fits in a single JSON file
-  that's easy to review – even by an LLM. No more black-box servers or
-  third-party code accessing your sensitive data.
+<Card title="Simple & Declarative" icon="feather">
+  **JSON or YAML — your choice** Define tools declaratively in simple schema
+  files. No complex server setup, no coding required. Just clean, readable
+  configurations that anyone can understand and review.
+</Card>
+
+<Card title="Universal Compatibility" icon="globe">
+  **Works everywhere MCP works** Connect to Claude Desktop, VSCode, Cursor, or
+  any MCP-compatible application. Or integrate directly into your Python apps
+  using the adapter.
+</Card>
+
+<Card title="Enhanced MCP Integration" icon="plug-circle-check">
+  **Best of both worlds** Use existing MCP servers with added benefits —
+  tagging, filtering, caching, and smart tool registration. Only call upstream
+  servers when needed.
 </Card>
 
 <Card title="Multiple Execution Types" icon="code">
-  **HTTP • CLI • File • Text**: Wrap REST APIs, command-line tools, file
-  operations, and text templates – all from the same unified interface. Perfect
-  for integrating diverse systems and workflows.
+  **HTTP • CLI • File • Text** Build your own tools that wrap REST APIs,
+  command-line utilities, file operations, and text templates. Perfect for
+  custom integrations.
 </Card>
 
 <Card title="Built-in Authentication" icon="key">
   **API Key • Bearer Token • Basic Auth • OAuth2** Comprehensive authentication
-  support built right into the schema. Securely connect to any service without
-  writing custom authentication logic.
+  support for your custom HTTP tools. Securely connect to any service without
+  writing custom code.
 </Card>
 
 <Card title="Advanced Templating" icon="wrench">
-  **Dynamic Values • Conditionals • Loops** Powerful template engine with
-  environment variable substitution, conditional logic, and iteration for
-  complex, dynamic tool execution.
+  **Dynamic Values • Conditionals • Loops** Powerful built-in template engine
+  with environment variables, conditional logic, and iteration for complex,
+  dynamic tool execution.
 </Card>
 
+  <Card title="Performance & Caching" icon="gauge-high">
+    **Lightning-fast tool discovery** Tools from MCP servers are cached locally.
+    Configure cache duration per server. Instant startup with on-demand
+    execution.
+  </Card>
 </CardGroup>
 
 <Info>
-  MCI makes AI tool development accessible to everyone by using JSON schemas
-  that work in **every programming language**. It's a lightweight alternative to
-  complex systems like MCP, living right in your project repo.
+  MCI makes MCP server creation and tool integration accessible to everyone. No
+  programming required — just simple JSON or YAML schemas.
 </Info>
 
-## The Vision: Simplifying AI Development
+## The Vision: Simplifying MCP Server Creation
 
-MCP is a great tool that allows to create servers and tools with complex logic,
-but in practice, it turned out that a lot of MCP servers are just API or CLI tool wrappers.
-And prompts? Have you ever used "prompts" feature of MCP? And it is the entire server in your infrastructure.
+Creating MCP servers traditionally requires significant development effort — setting up servers, handling protocols, managing connections, and maintaining infrastructure.
 
-So, sometimes MCP can be quite an overhead. **MCI changes everything** by bringing the simplicity and universality of JSON to AI tool development, acting more like a supplement to MCP than alternative.
+**MCI changes everything** by offering two powerful approaches:
 
-You know, HTTP request, terminal command & reading file are basic features that every programming language supports. And sometimes (pretty often), it is what the AI needs as a tool, but framed, described, standardized, reusable, shareable and secure. That's what the MCI is!
+1. **MCP Server Mode (mcix CLI)**: Create and run MCP servers on demand using simple configuration files
+2. **Programmatic Mode (mci-py adapter)**: Integrate tools directly into your Python applications with MCP-like capabilities
 
-### How MCI Makes AI Development Better
+Both modes share the same powerful core features — toolsets, MCP server integration, caching, and more.
+
+### The Problem with Traditional MCP Servers
+
+Many MCP servers are essentially wrappers around APIs or CLI tools. While MCP is powerful for complex logic, sometimes you just need:
+
+- A simple API wrapper
+- Access to a command-line tool
+- File reading with templating
+- A combination of tools from different sources
+
+Building a full server for these use cases is overkill. And integrating MCP clients into your applications adds complexity.
+
+### How MCI Solves This
 
 <Steps>
-<Step title="Universal Standard">
-  **One Schema, Every Language**
+<Step title="Configuration Over Code">
+  **Define, don't develop**
   
-  JSON works everywhere. Your MCI tools work in Python today, Node.js tomorrow, and any future language your team adopts. No rewrites, no vendor lock-in.
+  Write a simple JSON or YAML file instead of coding an entire server. MCI handles all the MCP protocol details, server lifecycle, and tool registration automatically. Use it as a server or programmatically.
 </Step>
 
-<Step title="Instant Shareability">
-  Share your entire AI toolset by copying a single JSON file. Teams can
-  collaborate on tools like they collaborate on code – with version control,
-  reviews, and easy distribution.
+<Step title="Mix & Match Tools">
+  **Flexible tool sources** Combine tools from multiple MCP servers, your own
+  custom HTTP/CLI tools, file operations, and community Toolsets — all in one
+  configuration. Apply filters and tags to organize them.
 </Step>
 
-<Step title="LLM-Friendly Design">
-  The simple JSON format means LLMs can help you build tools. For example, Share
-  API documentation with an AI, and it can generate whole MCI schema in minutes
-  – not hours or days.
+<Step title="Smart Caching & Performance">
+  **Fast and efficient** MCP server tools are cached locally. Configure cache
+  expiration per server. Tools register instantly from cache, upstream servers
+  only execute when needed. Works in both server and programmatic modes.
 </Step>
 
-<Step title="Maximum Flexibility">
-  One `.mci.json` file for your whole project, separate files per agent, one
-  file per API, or mix tools from different authors. It doesn't matter – it's
-  not 10 servers to initialize, it's just 10 files in your repo.
+<Step title="Choose Your Integration Method">
+
+**Server or Programmatic**:
+
+- **MCP Server**: Run `uvx mcix run --file ./mci.json` and connect to Claude, VSCode, or Cursor
+- **Programmatic**: Use `mci-py` adapter in your Python code to get tools and execute them directly
+
 </Step>
 
-<Step title="Security & Trust">
-  **Transparent & Auditable**
+<Step title="Toolset Ecosystem">
+  **Share and reuse**
   
-  Every tool is defined in plain JSON that humans and AI can easily review. No hidden server code, no mysterious third-party services – just transparent, auditable tool definitions.
+  Package tools into Toolsets stored in `./mci` directory. Organize & Share them. Your main `mci.json` links to Toolsets and MCP servers you want to use. Works identically in both modes.
 </Step>
 </Steps>
 
+<Check>
+  With MCI, you go from "I need tools" to "I have working tools" in minutes —
+  whether you need an MCP server or direct programmatic integration.
+</Check>
+
 ## Quick Example
 
-See how simple it is to create and use AI tools with MCI:
+See how simple it is to create an MCP server with MCI:
 
 <CodeGroup>
-```json tool-definition.mci.json
+```json mci.json
 {
-  "tools": [
+  "toolsets": [
     {
-      "name": "greet_user",
-      "description": "Generate a personalized greeting message",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "description": "user's name"
-          }
-        },
-        "required": ["username"]
-      },
-      "execution": {
-        "type": "text",
-        "text": "Hello, {{props.username}}! Welcome to MCI."
+      "source": "./mci/my-tools.json"
+    }
+  ],
+  "mcpServers": [
+    {
+      "name": "filesystem",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/files"],
+      "cache": {
+        "enabled": true,
+        "ttlDays": 7
       }
     }
   ]
 }
 ```
 
-```python Python Usage
+```yaml my-tools.json (YAML)
+tools:
+  - name: greet_user
+    description: Generate a personalized greeting message
+    tags: [greeting, text]
+    inputSchema:
+      type: object
+      properties:
+        username:
+          type: string
+          description: User's name
+      required: [username]
+    execution:
+      type: text
+      text: "Hello, {{props.username}}! Welcome to MCI."
+
+  - name: get_weather
+    description: Get current weather for a location
+    tags: [weather, api]
+    inputSchema:
+      type: object
+      properties:
+        city:
+          type: string
+          description: City name
+      required: [city]
+    execution:
+      type: http
+      method: GET
+      url: "https://api.weather.com/v1/current"
+      params:
+        q: "{{props.city}}"
+      auth:
+        type: apiKey
+        in: header
+        name: X-API-Key
+```
+
+```bash Run as MCP Server
+# Install MCI
+uvx mcix --version
+
+# Run as MCP server (STDIO)
+uvx mcix run --file mci.json
+
+# Run with filter
+uvx mcix run --file mci.json --filter tags:read
+
+# Or run a specific toolset
+uvx mcix run --file ./mci/my-tools.json
+```
+
+```python Use Programmatically (Python)
 from mcipy import MCIClient
 
-# Initialize with your schema
-client = MCIClient(json_file_path="tool-definition.mci.json")
+# Initialize with your configuration
+client = MCIClient(json_file_path="mci.json")
 
-# Execute the tool
-result = client.execute(
+# List all available tools (from toolsets AND MCP servers)
+tools = client.list_tools()
+print(f"Available tools: {[tool['name'] for tool in tools]}")
+
+# Execute a custom tool
+result = client.execute_tool(
     tool_name="greet_user",
-    properties={"username": "Alice"}
+    arguments={"username": "Alice"}
 )
+print(result)  # "Hello, Alice! Welcome to MCI."
 
-print(result)  # "Hello Alice! Welcome to MCI."
+# Execute a tool from the filesystem MCP server (cached)
+file_result = client.execute_tool(
+    tool_name="read_file",
+    arguments={"path": "/allowed/path/file.txt"}
+)
+```
+
+```json Claude Desktop Config
+{
+  "mcpServers": {
+    "my-mci-server": {
+      "command": "uvx",
+      "args": ["mcix", "run"]
+    }
+  }
+}
 ```
 
 </CodeGroup>
 
 <Check>
-  **That's it!** You've just defined and executed your first MCI tool. Scale
-  this to hundreds of tools across your entire AI application.
+  **That's it!** Same configuration works for both MCP server mode and
+  programmatic usage. All features — toolsets, MCP integration, caching — work
+  identically in both modes.
 </Check>
 
-## Coming Soon
-
-<Info>
-  The Python adapter is ready and battle-tested with 92%+ test coverage. More
-  language adapters are on the way!
-</Info>
-
-<CardGroup cols={3}>
-  <Card title="Node.js Adapter" icon="node-js">
-    **In Development** Full TypeScript support with the same simple API. Perfect
-    for JavaScript and Node.js applications.
-  </Card>
-
-{" "}
-
-<Card title="Go Adapter" icon="golang">
-  **Planned** High-performance Go implementation for system-level tools and
-  microservices.
-</Card>
-
-  <Card title="PHP Adapter" icon="php">
-    **Planned** Bringing MCI to the PHP ecosystem for web applications and CMS
-    integrations.
-  </Card>
-</CardGroup>
-
-## Sponsors
-
-<Warning>
-**No Sponsors Yet** – But You Can Change That!
-
-This project is built and maintained by individual developers with passion for simplifying AI development. We're not backed by tech companies or funded in any way. Any help will be appreciated!
-
-</Warning>
-
-**Want to support MCI's development?**
-
-- 🐛 Report bugs and suggest features
-- 💻 Contribute code, documentation, or examples
-- 📢 Spread the word and share the project
-- 💝 Become a sponsor to support ongoing development
-
-We offer different sponsorship tiers with exclusive perks:
-
-- 🚀 **Visibility** in our channels
-- 🎯 **Priority support** for your use cases
-- 📚 **Custom implementations** and examples
-- 🏆 **Recognition** in our documentation and releases
-
-**Contact us:** [revaz@usemci.dev](mailto:revaz@usemci.dev)
-
-## Common Use Cases
-
-<Info>
-  MCI excels in scenarios where you need simple, reliable tool integration
-  without the complexity of full server deployments.
-</Info>
+## Key Features Explained
 
 <AccordionGroup>
-<Accordion title="🔗 API Integration & Wrapping">
-**Transform any REST API into an AI-friendly tool**
+<Accordion title="🎯 Toolsets — Organize and Share Tools">
+**Works like npm for AI tools**
 
-Perfect for wrapping third-party APIs like weather services, payment processors, or internal microservices. MCI handles authentication, request formatting, and response processing automatically.
+Toolsets are reusable collections of tools stored in your `./mci` directory. Your main `mci.json` references them:
 
 ```json
 {
-  "name": "get_weather",
-  "execution": {
-    "type": "http",
-    "method": "GET",
-    "url": "https://api.weather.com/current",
-    "auth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+  "toolsets": [
+    { "name": "github-tools" },
+    {
+      "name": "slack-tools.json",
+      "filter": "tags",
+      "filterValue": "communication"
+    }
+  ]
+}
+```
+
+- Share toolsets across projects
+- Filter tools by tags
+- Version control your tool collections
+- Mix tools from different authors
+
+</Accordion>
+
+<Accordion title="🔗 MCP Server Integration">
+**Use any existing MCP server**
+
+Add HTTP or STDIO MCP servers to your configuration:
+
+```json
+{
+  "mcp_servers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
+      "config": {
+        "expDays": 7,
+        "filter": "only",
+        "filterValue": "read_file,write_file,list_directory"
+      }
+    }
   }
 }
 ```
 
+**Benefits:**
+
+- Tools are cached locally for fast startup
+- Add tagging and filtering to any MCP server
+- Configurable cache expiration
+- Combine tools from multiple servers
+
 </Accordion>
 
-<Accordion title="🛠️ DevOps & System Administration">
-**Automate infrastructure tasks with CLI tool integration**
+<Accordion title="⚡ Smart Caching System">
+**Performance without complexity**
 
-Wrap command-line tools like Docker, Git, AWS CLI, or custom scripts. Perfect for deployment automation, monitoring, and system management tasks.
+When you add an MCP server to MCI:
 
-```json
+1. **First run:** MCI calls the server to discover tools and caches them
+2. **Subsequent runs:** Tools load instantly from cache
+3. **Execution:** Upstream server is called only when tools are used
+4. **Cache refresh:** Automatically updates when TTL expires
+
+This means:
+
+- Lightning-fast MCP server startup
+- Minimal overhead for tool discovery
+- Configurable cache duration per server
+- Works offline after initial cache
+
+</Accordion>
+
+<Accordion title="🎨 JSON and YAML Support">
+**Write schemas your way**
+
+Use JSON for high speed or YAML for the best readability:
+
+<CodeGroup>
+```json JSON Format
 {
-  "name": "deploy_service",
-  "execution": {
-    "type": "cli",
-    "command": "docker",
-    "args": ["deploy", "--stack", "{{props.service_name}}"],
-    "cwd": "{{env.DEPLOY_PATH}}"
-  }
+  "tools": [{
+    "name": "example",
+    "description": "An example tool",
+    "execution": { "type": "text", "text": "Hello" }
+  }]
 }
 ```
 
-</Accordion>
+```yaml YAML Format
+tools:
+  - name: example
+    description: An example tool
+    execution:
+      type: text
+      text: Hello
+```
 
-<Accordion title="📊 Data Processing & Analytics">
-**Create data pipelines and processing workflows**
+</CodeGroup>
 
-Chain together data transformation tools, database queries, and analytics scripts. Ideal for ETL processes, report generation, and data analysis workflows.
-
-</Accordion>
-
-<Accordion title="🤖 AI Agent Tool Libraries">
-**Build comprehensive tool libraries for AI agents**
-
-Create specialized toolsets for different agent roles - customer service bots, development assistants, or data analysis agents. Easy to share and maintain across projects.
-
-</Accordion>
-
-<Accordion title="🔄 Workflow Automation">
-**Orchestrate complex multi-step processes**
-
-Combine different execution types to create sophisticated workflows. Perfect for marketing, content publishing, or business process automation.
+Both formats work identically. Choose what works best for your team.
 
 </Accordion>
 
-<Accordion title="🏢 Prompts management">
+<Accordion title="🔀 Multiple Server Configurations">
+**Different servers for different needs**
 
-Use File execution to process complex Markdown or XML prompts
+Run specialized MCI configurations:
 
-```json
-{
-  "name": "support_assistant_instructions",
-  "execution": {
-    "type": "file",
-    "path": "./instructions.md",
-    "enableTemplating": true
-  }
-}
+```bash
+# Development environment
+uvx mcix run --file ./dev-tools.json
+
+# Production monitoring
+uvx mcix run --file ./prod-monitoring.json
+
+# Customer support agent
+uvx mcix run --file ./support-agent-tools.json
+```
+
+Each configuration can include:
+
+- Different toolsets
+- Different MCP servers
+- Custom tags and filters
+- Environment-specific settings
+
+</Accordion>
+
+<Accordion title="🏷️ Tagging and Filtering">
+**Organize and control tool access**
+
+Add tags to tools:
+
+```yaml ./mci/admin-tools.yaml
+tools:
+  - name: deploy_service
+    tags: [deployment, production, dangerous]
+    # ... tool definition
+```
+
+```yaml ./mci.yaml
+toolsets:
+  - name: admin-tools
+    filter: "tags"
+    filterValue: "deployment,production"
+```
+
+Filter tools when running:
+
+```bash
+# Only include tools with specific tags
+uvx mcix run --file mci.json --filter tags:deployment,monitoring
+
+# Exclude dangerous tools
+uvx mcix run --file mci.json --filter withoutTags:dangerous
 ```
 
 </Accordion>
 </AccordionGroup>
+
+---
+
+## Sponsors & Support
+
+<Warning>
+**Help Us Build the Future of MCP Tooling**
+
+MCI is built and maintained by individual developers passionate about making MCP accessible to everyone. We're not backed by tech companies or VC funding — just developers who believe in simplifying AI tool creation.
+
+</Warning>
+
+**Ways to support MCI:**
+
+- 🐛 **Report bugs** and suggest features on GitHub
+- 💻 **Contribute** code, documentation, or toolset examples
+- 📢 **Spread the word** — share MCI with your community
+- ⭐ **Star the repo** to show your support
+- 💝 **Become a sponsor** to accelerate development
+
+### Sponsorship Benefits
+
+<CardGroup cols={2}>
+  <Card title="🚀 Priority Support" icon="headset">
+    Get direct help with your MCI implementations and use cases
+  </Card>
+  <Card title="📢 Visibility" icon="megaphone">
+    Featured in our documentation, releases, and community channels
+  </Card>
+  <Card title="🎯 Custom Development" icon="code">
+    Request specific features or toolset implementations
+  </Card>
+  <Card title="🏆 Recognition" icon="award">
+    Logo placement and acknowledgment in our growing ecosystem
+  </Card>
+</CardGroup>
+
+**Interested in sponsoring?** Contact us: [revaz@usemci.dev](mailto:revaz@usemci.dev)
+
+<Info>
+  Every contribution helps us maintain the project, add new features, and
+  support the growing MCI community. Thank you for your support! 🙏
+</Info>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Get Started Now" icon="rocket" href="/documentation/quickstart">
+    Build your first MCP server with MCI in minutes
+  </Card>
+  <Card
+    title="Join the Community"
+    icon="users"
+    href="https://github.com/Model-Context-Interface/mci-py/discussions"
+  >
+    Connect with other developers, share toolsets, and get help
+  </Card>
+  <Card
+    title="View on GitHub"
+    icon="github"
+    href="https://github.com/Model-Context-Interface/mci-uvx"
+  >
+    Star the repo, contribute, or report issues
+  </Card>
+  <Card
+    title="Schema Reference"
+    icon="book-open"
+    href="/documentation/schema-reference"
+  >
+    Explore the complete MCI configuration reference
+  </Card>
+</CardGroup>
+
+## Common Use Cases
+
+<Info>
+  MCI excels at both creating custom MCP servers and providing programmatic tool
+  integration. Choose the mode that fits your needs — or use both!
+</Info>
+
+<AccordionGroup>
+<Accordion title="🔗 API Integration & Wrapping">
+**Transform any REST API into MCP tools**
+
+Create custom tools that wrap third-party APIs like weather services, payment processors, or internal microservices:
+
+```yaml
+tools:
+  - name: get_weather
+    description: Get current weather
+    execution:
+      type: http
+      method: GET
+      url: https://api.weather.com/current
+      auth:
+        type: apiKey
+        in: header
+        name: X-API-Key
+```
+
+**Use as MCP server**: Connect to Claude Desktop, VSCode, or other MCP clients  
+**Use programmatically**: Call directly from your Python application, acting similar to MCP client
+
+Perfect for:
+
+- SaaS API integrations
+- Internal microservice access
+- Third-party service wrappers
+- Custom authentication flows
+
+</Accordion>
+
+<Accordion title="🤖 Custom AI Agent Toolkits">
+**Build specialized tool collections for different agents**
+
+Create focused tool collections for specific agent roles:
+
+```bash
+# As MCP servers
+uvx mcix run --file ./mci/support-agent.json
+uvx mcix run --file ./mci/dev-assistant.json
+```
+
+```python
+# Or programmatically in your agent framework
+from mcipy import MCIClient
+
+support_tools = MCIClient(json_file_path="./mci/support-agent.json")
+dev_tools = MCIClient(json_file_path="./mci/dev-assistant.json")
+
+# Use with LangChain, CrewAI, or your custom framework
+```
+
+Each can combine:
+
+- Relevant MCP servers (filesystem, search, etc.)
+- Custom API tools
+- Role-specific CLI wrappers
+- Filtered tool access via tags
+
+</Accordion>
+
+<Accordion title="🔄 Unified Tool Access">
+**One MCP server, multiple tool sources**
+
+Combine tools from various sources into a single MCP endpoint:
+
+```json
+{
+  "toolsets": [
+    { "source": "./mci/github-api.json" },
+    { "source": "./mci/slack-api.json" },
+    { "source": "./mci/jira-api.json" }
+  ],
+  "mcpServers": [
+    { "name": "filesystem", "type": "stdio" /* ... */ },
+    { "name": "brave-search", "type": "stdio" /* ... */ }
+  ]
+}
+```
+
+Your AI application gets one unified interface to all tools — whether using MCP server mode or the programmatic adapter.
+
+</Accordion>
+
+<Accordion title="🛠️ DevOps & CLI Tool Wrappers">
+```
+
+# Developer assistant
+
+uvx mcix run --file ./mci/dev-assistant.json
+
+# Data analyst
+
+uvx mcix run --file ./mci/data-analyst.json
+
+````
+
+Each can combine:
+
+- Relevant MCP servers (filesystem, search, etc.)
+- Custom API tools
+- Role-specific CLI wrappers
+- Filtered tool access via tags
+
+</Accordion>
+
+<Accordion title="� Unified Tool Access">
+**One MCP server, multiple tool sources**
+
+Combine tools from various sources into a single MCP endpoint:
+
+```json
+{
+  "toolsets": [
+    { "source": "./mci/github-api.json" },
+    { "source": "./mci/slack-api.json" },
+    { "source": "./mci/jira-api.json" }
+  ],
+  "mcpServers": [
+    { "name": "filesystem", "type": "stdio" /* ... */ },
+    { "name": "brave-search", "type": "stdio" /* ... */ }
+  ]
+}
+````
+
+Your AI application gets one unified interface to all tools.
+
+</Accordion>
+
+<Accordion title="📄 Prompt & Template Management">
+**Manage complex prompts with File execution**
+
+Store prompts as files with templating:
+
+```yaml
+tools:
+  - name: code_review_prompt
+    description: Generate code review instructions
+    execution:
+      type: file
+      path: ./prompts/code-review.md
+      enableTemplating: true
+```
+
+```markdown prompts/code-review.md
+# Code Review Instructions
+
+Repository: {{props.repo_name}}
+Language: {{props.language}}
+
+Please review the code following these guidelines:
+
+- Check for security vulnerabilities
+- Verify error handling
+- Assess code readability
+
+{{env.CUSTOM_GUIDELINES}}
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+---
+
+## Getting Started
+
+<Tabs>
+<Tab title="MCP Server Mode">
+<Steps>
+<Step title="Install MCI">
+  ```bash
+  # Using uvx (recommended)
+  uvx mcix install
+  ```
+</Step>
+
+<Step title="Create Your Configuration">
+  Update a `mci.json` or `mci.yaml` file
+</Step>
+
+<Step title="Run as MCP Server">
+  ```uvx mcix run```
+  <Check>
+    Your MCP server is now running! Tools are cached and ready to use.
+  </Check>
+</Step>
+
+<Step title="Connect to Your Application">
+  Add to Claude Desktop, VSCode, or Cursor config:
+  
+  ```json
+  {
+    "mcpServers": {
+      "my-mci-server": {
+        "command": "uvx",
+        "args": ["mcix", "run"]
+      }
+    }
+  }
+  ```
+</Step>
+</Steps>
+</Tab>
+
+<Tab title="Programmatic Mode (Python)">
+<Steps>
+<Step title="Install mci-py">
+  ```bash
+  uv add mci-py
+  ```
+</Step>
+
+<Step title="Create Your Configuration">
+  Create the `.mci.json` or `.mci.yaml` file
+</Step>
+
+<Step title="Use in Your Python Code">
+
+```python
+from mcipy import MCIClient
+
+# Initialize with your configuration
+client = MCIClient(json_file_path="myagent.mci.yaml")
+
+# List all available tools (from toolsets AND MCP servers)
+tools = client.list_tools()
+print(f"Available: {[t['name'] for t in tools]}")
+
+# Execute tools
+result = client.execute_tool(
+    tool_name="greet_user",
+    arguments={"username": "Alice"}
+)
+```
+
+  <Check>
+    All features work the same — toolsets, MCP caching, execution types!
+  </Check>
+</Step>
+</Steps>
+</Tab>
+</Tabs>
 
 ---
 
