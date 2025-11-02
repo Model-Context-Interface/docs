@@ -211,25 +211,25 @@ Building a full server for these use cases is overkill. And integrating MCP clie
 See how simple it is to create an MCP server with MCI:
 
 <CodeGroup>
+
 ```json mci.json
 {
   "toolsets": [
     {
-      "source": "./mci/my-tools.json"
+      "name": "my-tools.json"
     }
   ],
-  "mcpServers": [
-    {
-      "name": "filesystem",
-      "type": "stdio",
+  "mcp_servers": {
+    "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/files"],
-      "cache": {
-        "enabled": true,
-        "ttlDays": 7
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
+      "config": {
+        "expDays": 7,
+        "filter": "only",
+        "filterValue": "read_file,write_file,list_directory"
       }
     }
-  ]
+  }
 }
 ```
 
@@ -269,11 +269,12 @@ tools:
         type: apiKey
         in: header
         name: X-API-Key
+        value: "{{env.API_KEY}}"
 ```
 
 ```bash Run as MCP Server
 # Install MCI
-uvx mcix --version
+uvx mcix install
 
 # Run as MCP server (STDIO)
 uvx mcix run --file mci.json
@@ -296,14 +297,14 @@ tools = client.list_tools()
 print(f"Available tools: {[tool['name'] for tool in tools]}")
 
 # Execute a custom tool
-result = client.execute_tool(
+result = client.execute(
     tool_name="greet_user",
     arguments={"username": "Alice"}
 )
 print(result)  # "Hello, Alice! Welcome to MCI."
 
 # Execute a tool from the filesystem MCP server (cached)
-file_result = client.execute_tool(
+file_result = client.execute(
     tool_name="read_file",
     arguments={"path": "/allowed/path/file.txt"}
 )
@@ -644,14 +645,14 @@ Combine tools from various sources into a single MCP endpoint:
 ```json
 {
   "toolsets": [
-    { "source": "./mci/github-api.json" },
-    { "source": "./mci/slack-api.json" },
-    { "source": "./mci/jira-api.json" }
+    "github-api.json",
+    { "name": "slack-api.json" },
+    { "name": "jira-api.json" }
   ],
-  "mcpServers": [
-    { "name": "filesystem", "type": "stdio" /* ... */ },
-    { "name": "brave-search", "type": "stdio" /* ... */ }
-  ]
+  "mcp_servers": {
+    { "filesystem": {"type": "stdio" /* ... */} },
+    { "brave-search": {"type": "stdio" /* ... */} }
+  }
 }
 ```
 
@@ -689,14 +690,14 @@ Combine tools from various sources into a single MCP endpoint:
 ```json
 {
   "toolsets": [
-    { "source": "./mci/github-api.json" },
-    { "source": "./mci/slack-api.json" },
-    { "source": "./mci/jira-api.json" }
+    "github-api.json",
+    { "name": "slack-api.json" },
+    { "name": "jira-api.json" }
   ],
-  "mcpServers": [
-    { "name": "filesystem", "type": "stdio" /* ... */ },
-    { "name": "brave-search", "type": "stdio" /* ... */ }
-  ]
+  "mcp_servers": {
+    { "filesystem": {"type": "stdio" /* ... */} },
+    { "brave-search": {"type": "stdio" /* ... */} }
+  }
 }
 ````
 
@@ -805,7 +806,7 @@ tools = client.list_tools()
 print(f"Available: {[t['name'] for t in tools]}")
 
 # Execute tools
-result = client.execute_tool(
+result = client.execute(
     tool_name="greet_user",
     arguments={"username": "Alice"}
 )
