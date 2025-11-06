@@ -27,7 +27,6 @@
           {
             "group": "Getting Started",
             "pages": [
-              "documentation/introduction",
               "documentation/quickstart",
               "documentation/commands"
             ]
@@ -35,6 +34,7 @@
           {
             "group": "Core Concepts",
             "pages": [
+              "documentation/introduction",
               "documentation/structure",
               "documentation/tools",
               "documentation/toolsets",
