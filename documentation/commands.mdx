@@ -3,7 +3,7 @@ title: "Commands"
 description: "mcix commands reference"
 ---
 
-### `mci install`
+### `mcix install`
 
 Bootstrap a new MCI project with starter configuration.
 
@@ -21,7 +21,7 @@ Creates:
 - `mci/` directory - Library of toolsets
 - `mci/.gitignore` - Excludes generated files
 
-### `mci list`
+### `mcix list`
 
 Display all available tools from your configuration.
 
@@ -50,7 +50,7 @@ uvx mcix list --format yaml
 - `toolsets:ts1,ts2` - Include tools from specific toolsets
 - `without-tags:tag1,tag2` - Exclude tools with these tags
 
-### `mci validate`
+### `mcix validate`
 
 Validate your MCI schema for correctness.
 
@@ -71,7 +71,7 @@ Checks for:
 - Toolset references
 - MCP command availability (warnings)
 
-### `mci add`
+### `mcix add`
 
 Add toolset references to your schema.
 
@@ -91,7 +91,7 @@ uvx mcix add weather-tools --path=custom.mci.json
 
 Automatically preserves your file format (JSON stays JSON, YAML stays YAML).
 
-### `mci run`
+### `mcix run`
 
 Launch an MCP server that dynamically serves your tools.
 
@@ -117,3 +117,61 @@ The server:
 - Delegates execution back to MCIClient
 
 **Stop the server**: Press `Ctrl+C`
+
+### `mcix envs`
+
+List all environment variables referenced in your MCI configuration.
+
+```bash
+# Show environment variables in table format
+uvx mcix envs
+
+# Generate .env.example.mci file
+uvx mcix envs --format=env
+
+# Check specific schema file
+uvx mcix envs --file=custom.mci.json
+```
+
+The `envs` command scans your entire MCI schema including:
+
+- Main schema file tools and configuration
+- All referenced toolsets
+- MCP server configurations
+
+**Output formats**:
+
+- `table` (default) - Display variables in a formatted table with locations
+- `env` - Generate `.env.example.mci` file with all variables
+
+**Example table output**:
+
+```
+┌─────────────────┬──────────────────┐
+│ Variable        │ Used In          │
+├─────────────────┼──────────────────┤
+│ API_KEY         │ main, weather    │
+│ DB_URL          │ database         │
+│ GITHUB_TOKEN    │ mcp:github       │
+└─────────────────┴──────────────────┘
+```
+
+**Example .env file output**:
+
+```bash
+# .env.example.mci
+# Environment variables used in MCI configuration
+#
+# Copy this file to .env.mci and fill in your values
+
+# Used in: main, weather
+API_KEY=
+
+# Used in: database
+DB_URL=
+
+# Used in: mcp:github
+GITHUB_TOKEN=
+```
+
+> **Tip**: Run `uvx mcix envs --format=env` to generate a template `.env.example.mci` file, then copy it to `.env.mci` and fill in your values. Commit `.env.example.mci` to your repository so team members know what environment variables are needed.
